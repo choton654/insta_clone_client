@@ -23,18 +23,8 @@ const Home = () => {
     getAllUsers();
   }, []);
 
-  const commentChange = (e, id) => {
-    state.posts.filter((post) => {
-      if (post._id.toString() === id.toString()) {
-        console.log("post matched");
-        setComment({
-          [e.target.name]: e.target.value,
-        });
-      } else {
-        console.log("post doesn't match");
-        setComment("");
-      }
-    });
+  const commentChange = (e) => {
+    setComment(e.target.value);
   };
 
   const handleChange = async (query) => {
@@ -358,7 +348,7 @@ const Home = () => {
                     <input
                       className="materialize-input"
                       name="comment"
-                      onChange={(e) => commentChange(e, post._id)}
+                      onChange={commentChange}
                       value={comment}
                       required
                       placeholder="Comment here"
