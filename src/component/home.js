@@ -189,7 +189,7 @@ const Home = () => {
   return (
     <div className="row" style={{ backgroundColor: "lightsalmon" }}>
       <div className="col s12 l9">
-        {state.posts ? (
+        {state.posts && user ? (
           state.posts.map((post, i) => (
             <div
               className="comtainer z-depth-4"
