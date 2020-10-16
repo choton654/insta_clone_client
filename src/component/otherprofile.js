@@ -108,13 +108,13 @@ const Otherprofile = () => {
                 justifyContent: "center",
               }}
             >
-              <h1>{state.otherPost?.username}</h1>
-              <h4>{state.otherPost?.email}</h4>
-              {state.otherPost?.followers?.includes(user?._id) ? (
+              <h1>{state.otherPost.username}</h1>
+              <h4>{state.otherPost.email}</h4>
+              {state.otherPost.followers.includes(user._id) ? (
                 <a
                   style={{ width: "50%" }}
                   className="waves-effect waves-light btn red"
-                  onClick={() => unfollowUser(state.otherPost?._id)}
+                  onClick={() => unfollowUser(state.otherPost._id)}
                 >
                   unfollow
                 </a>
@@ -122,7 +122,7 @@ const Otherprofile = () => {
                 <a
                   style={{ width: "50%" }}
                   className="waves-effect waves-light btn"
-                  onClick={() => followUser(state.otherPost?._id)}
+                  onClick={() => followUser(state.otherPost._id)}
                 >
                   follow
                 </a>
@@ -135,9 +135,9 @@ const Otherprofile = () => {
                   width: "108%",
                 }}
               >
-                <h6>{state.otherPost.allposts?.length}posts </h6>
-                <h6>{state.otherPost.followers?.length}followers </h6>
-                <h6>{state.otherPost.followings?.length} followings </h6>
+                <h6>{state.otherPost.allposts.length}posts </h6>
+                <h6>{state.otherPost.followers.length}followers </h6>
+                <h6>{state.otherPost.followings.length} followings </h6>
               </div>
             </div>
           </div>
@@ -150,7 +150,7 @@ const Otherprofile = () => {
               alignItems: "center",
             }}
           >
-            {state.otherPost.allposts?.map((post) => (
+            {state.otherPost.allposts.map((post) => (
               <div
                 style={{
                   maxWidth: "450px",

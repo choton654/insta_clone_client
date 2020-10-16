@@ -200,7 +200,7 @@ const Home = () => {
                 />
                 <Link
                   to={
-                    user?._id === post.postedBy._id
+                    user._id === post.postedBy._id
                       ? "/profile"
                       : `/profile/${post.postedBy._id}`
                   }
@@ -234,9 +234,9 @@ const Home = () => {
                 >
                   favorite
                 </i>
-                {post.likes?.includes(user?._id) ? (
+                {post.likes.includes(user._id) ? (
                   <i
-                    onClick={() => unlikePost(post?._id)}
+                    onClick={() => unlikePost(post._id)}
                     style={{
                       paddingLeft: "20px",
                       cursor: "pointer",
@@ -248,7 +248,7 @@ const Home = () => {
                   </i>
                 ) : (
                   <i
-                    onClick={() => likePost(post?._id)}
+                    onClick={() => likePost(post._id)}
                     style={{
                       paddingLeft: "20px",
                       cursor: "pointer",
@@ -259,9 +259,9 @@ const Home = () => {
                     thumb_up
                   </i>
                 )}
-                {post.postedBy._id === user?._id && (
+                {post.postedBy._id === user._id && (
                   <i
-                    onClick={() => deletePost(post?._id)}
+                    onClick={() => deletePost(post._id)}
                     style={{
                       paddingRight: "20px",
                       cursor: "pointer",
@@ -291,7 +291,7 @@ const Home = () => {
                   }}
                 >
                   <div>
-                    {post.comments?.map((comment) => (
+                    {post.comments.map((comment) => (
                       <div
                         className="collection"
                         key={comment._id}
@@ -305,16 +305,14 @@ const Home = () => {
                           className="collection-item"
                           style={{ backgroundColor: "lightblue" }}
                         >
-                          <strong>{comment.postedBy?.username}</strong>
+                          <strong>{comment.postedBy.username}</strong>
                           {"    "}:{"   "}
                           {comment.text}
                         </div>
-                        {comment.postedBy?._id === user?._id && (
+                        {comment.postedBy._id === user._id && (
                           <i
                             style={{ marginLeft: "20px" }}
-                            onClick={() =>
-                              deleteComment(post?._id, comment._id)
-                            }
+                            onClick={() => deleteComment(post._id, comment._id)}
                             style={{
                               paddingRight: "20px",
                               paddingTop: "15px",
@@ -393,7 +391,7 @@ const Home = () => {
           {foundUser.map((founduser) => (
             <Link
               to={
-                user?._id === founduser._id
+                user._id === founduser._id
                   ? "/profile"
                   : `/profile/${founduser._id}`
               }
@@ -409,42 +407,3 @@ const Home = () => {
 };
 
 export default Home;
-
-//
-{
-  /* <div
-          className="card"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "wrap",
-            paddingLeft: "10px",
-          }}
-        >
-          <h5 style={{ paddingLeft: "10px" }}>People you may know</h5>
-          {state.users.map((otheruser) => (
-            <div key={otheruser._id} style={{ display: "flex" }}>
-              <img
-                src={otheruser.photo}
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "80px",
-                  margin: "10px",
-                }}
-              />
-              <Link
-                to={
-                  user?._id === otheruser._id
-                    ? "/profile"
-                    : `/profile/${otheruser._id}`
-                }
-              >
-                <strong className="col s12">
-                  <h6>{otheruser.username}</h6>
-                </strong>
-              </Link>
-            </div>
-          ))}
-        </div> */
-}

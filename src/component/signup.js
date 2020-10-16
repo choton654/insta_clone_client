@@ -104,7 +104,7 @@ const Signup = () => {
             <input
               className="file-path validate"
               type="text"
-              defaultValue={image?.name || ""}
+              defaultValue={image.name || ""}
               required
             />
           </div>

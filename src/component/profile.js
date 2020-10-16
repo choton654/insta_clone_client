@@ -112,8 +112,8 @@ const Profile = () => {
               </i>
             </div>
             <div>
-              <h1>{user?.username}</h1>
-              <h4>{user?.email}</h4>
+              <h1>{user.username}</h1>
+              <h4>{user.email}</h4>
               <div
                 style={{
                   display: "flex",
@@ -121,9 +121,9 @@ const Profile = () => {
                   alignItems: "center",
                 }}
               >
-                <h6>{state.myPosts?.length}posts </h6>
-                <h6>{user.followers?.length} followers</h6>
-                <h6>{user.followings?.length} followings</h6>
+                <h6>{state.myPosts.length}posts </h6>
+                <h6>{user.followers.length} followers</h6>
+                <h6>{user.followings.length} followings</h6>
               </div>
             </div>
           </div>
@@ -134,7 +134,7 @@ const Profile = () => {
               flexWrap: "wrap",
             }}
           >
-            {state.myPosts?.map((post) => (
+            {state.myPosts.map((post) => (
               <div
                 key={post._id}
                 style={{
@@ -144,12 +144,6 @@ const Profile = () => {
               >
                 <div className="card-image">
                   <img src={post.photo} />
-                  {/* <Link
-                    to="/createpost"
-                    className="btn-floating halfway-fab waves-effect waves-light red"
-                  >
-                    <i className="material-icons">add</i>
-                  </Link> */}
                 </div>
               </div>
             ))}
