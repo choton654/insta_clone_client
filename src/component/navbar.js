@@ -19,9 +19,7 @@ const Navbar = () => {
         "https://pacific-crag-92696.herokuapp.com/api/logout"
       );
       console.log(res.data);
-      // localStorage.setItem("user", "");
-      // localStorage.setItem("jwt", "");
-      localStorage.clear();
+      localStorage.removeItem("jwt");
       dispatch({ type: "LOGOUT_USER" });
       history.push("/");
     } catch (error) {

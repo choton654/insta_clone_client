@@ -13,17 +13,17 @@ const Home = () => {
   const css1 = { display: "block" };
 
   let user;
-  // state.user !== null
-  //   ? (user = state.user)
-  //   : (user = JSON.parse(localStorage.getItem("user")));
+  state.user !== null
+    ? (user = state.user)
+    : (user = JSON.parse(localStorage.getItem("user")));
 
-  if (state.user !== null) {
-    user = state.user;
-  } else if (localStorage.key("user") != "") {
-    user = JSON.parse(localStorage.getItem("user"));
-  } else {
-    user = state.users.forEach((user) => ({ _id: user._id }));
-  }
+  // if (state.user !== null) {
+  //   user = state.user;
+  // } else if (localStorage.key("user") != "") {
+  //   user = JSON.parse(localStorage.getItem("user"));
+  // } else {
+  //   user = state.users.forEach((user) => ({ _id: user._id }));
+  // }
 
   const token = localStorage.getItem("jwt");
   useEffect(() => {
@@ -189,7 +189,7 @@ const Home = () => {
   return (
     <div className="row" style={{ backgroundColor: "lightsalmon" }}>
       <div className="col s12 l9">
-        {state.posts && user ? (
+        {state.posts ? (
           state.posts.map((post, i) => (
             <div
               className="comtainer z-depth-4"
