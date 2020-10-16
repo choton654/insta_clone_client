@@ -96,7 +96,7 @@ const Otherprofile = () => {
                   border: "5px solid darkmagenta",
                   borderRadius: "80px",
                 }}
-                src={state.otherPost?.photo}
+                src={state.otherPost.photo}
                 alt="no image"
               />
             </div>
@@ -152,6 +152,7 @@ const Otherprofile = () => {
           >
             {state.otherPost.allposts.map((post) => (
               <div
+                key={post._id}
                 style={{
                   maxWidth: "450px",
                 }}

@@ -8,6 +8,7 @@ const Home = () => {
   const { state, dispatch } = useContext(userContext);
   const [search, setSearch] = useState("");
   const [foundUser, setFoundUser] = useState([]);
+  const [comment, setComment] = useState("");
   const css0 = { display: "none" };
   const css1 = { display: "block" };
 
@@ -16,11 +17,25 @@ const Home = () => {
     ? (user = state.user)
     : (user = JSON.parse(localStorage.getItem("user")));
   const token = localStorage.getItem("jwt");
-  const [comment, setComment] = useState("");
+
   useEffect(() => {
     getAllPosts();
     getAllUsers();
   }, []);
+
+  const commentChange = (e, id) => {
+    state.posts.filter((post) => {
+      if (post._id.toString() === id.toString()) {
+        console.log("post matched");
+        setComment({
+          [e.target.name]: e.target.value,
+        });
+      } else {
+        console.log("post doesn't match");
+        setComment("");
+      }
+    });
+  };
 
   const handleChange = async (query) => {
     setSearch(query);
@@ -343,7 +358,7 @@ const Home = () => {
                     <input
                       className="materialize-input"
                       name="comment"
-                      onChange={(e) => setComment(e.target.value)}
+                      onChange={(e) => commentChange(e, post._id)}
                       value={comment}
                       required
                       placeholder="Comment here"

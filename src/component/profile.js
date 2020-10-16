@@ -79,7 +79,7 @@ const Profile = () => {
 
   return (
     <div className="container z-depth-4" style={{ backgroundColor: "white" }}>
-      {user ? (
+      {user && state.myPosts ? (
         <div key={user._id}>
           <div
             style={{
