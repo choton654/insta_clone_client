@@ -3,6 +3,7 @@ import M from "materialize-css";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "../context/userContext";
+import ProtectRoute from "./protectRoute";
 
 const Myfollowings = () => {
   const { state, dispatch } = useContext(userContext);
@@ -90,4 +91,4 @@ const Myfollowings = () => {
   );
 };
 
-export default Myfollowings;
+export default ProtectRoute(Myfollowings);

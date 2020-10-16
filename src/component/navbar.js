@@ -12,7 +12,8 @@ const Navbar = () => {
   }, []);
 
   const { state, dispatch } = useContext(userContext);
-  const user = JSON.parse(localStorage.getItem("user")) || "";
+  // const user = JSON.parse(localStorage.getItem("user")) || "";
+  const token = localStorage.getItem("jwt");
   const handleClick = async () => {
     try {
       const res = await axios.post(
@@ -37,7 +38,7 @@ const Navbar = () => {
             <a href="#" data-target="slide-out" className="sidenav-trigger">
               <i className="material-icons">menu</i>
             </a>
-            {user ? (
+            {token ? (
               <ul id="mobile-nav" className="right hide-on-med-and-down">
                 <li>
                   <Link to="/createpost">Createpost</Link>
@@ -71,7 +72,7 @@ const Navbar = () => {
         </nav>
       </div>
       <div>
-        {user ? (
+        {token ? (
           <ul
             ref={ulInput}
             id="slide-out"
