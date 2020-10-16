@@ -13,11 +13,21 @@ const Home = () => {
   const css1 = { display: "block" };
 
   let user;
-  state.user !== null
-    ? (user = state.user)
-    : (user = JSON.parse(localStorage.getItem("user")));
-  const token = localStorage.getItem("jwt");
+  // state.user !== null
+  //   ? (user = state.user)
+  //   : (user = JSON.parse(localStorage.getItem("user")));
 
+  if (state.user !== null) {
+    user = state.user;
+  } else if (localStorage.key("user") != "") {
+    user = JSON.parse(localStorage.getItem("user"));
+  } else {
+    user = {
+      _id: Math.random(),
+    };
+  }
+
+  const token = localStorage.getItem("jwt");
   useEffect(() => {
     getAllPosts();
     getAllUsers();
@@ -181,184 +191,190 @@ const Home = () => {
   return (
     <div className="row" style={{ backgroundColor: "lightsalmon" }}>
       <div className="col s12 l9">
-        {state.posts.map((post, i) => (
-          <div
-            className="comtainer z-depth-4"
-            style={{
-              maxWidth: "800px",
-              margin: "50px auto",
-              backgroundColor: "#8d8ebc",
-              padding: "10px",
-            }}
-            key={i}
-          >
-            <div style={{ backgroundColor: "whitesmoke" }} className="card">
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <img
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "80px",
-                    margin: "10px",
-                  }}
-                  src={post.postedBy.photo}
-                />
-                <Link
-                  to={
-                    user._id === post.postedBy._id
-                      ? "/profile"
-                      : `/profile/${post.postedBy._id}`
-                  }
-                >
-                  <strong
-                    style={{ paddingLeft: "20px", color: "darkmagenta" }}
-                    className="card-title"
-                  >
-                    {post.postedBy.username}
-                  </strong>
-                </Link>
-              </div>
-              <div className="card-image">
-                <div className="parallax">
+        {state.posts && user ? (
+          state.posts.map((post, i) => (
+            <div
+              className="comtainer z-depth-4"
+              style={{
+                maxWidth: "800px",
+                margin: "50px auto",
+                backgroundColor: "#8d8ebc",
+                padding: "10px",
+              }}
+              key={i}
+            >
+              <div style={{ backgroundColor: "whitesmoke" }} className="card">
+                <div style={{ display: "flex", alignItems: "center" }}>
                   <img
-                    style={{ paddingBottom: "10px" }}
-                    src={post.photo}
-                    width="650"
-                    alt="no-image"
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      borderRadius: "80px",
+                      margin: "10px",
+                    }}
+                    src={post.postedBy.photo}
                   />
-                </div>
-              </div>
-              <div>
-                <i
-                  style={{
-                    paddingLeft: "20px",
-                    color: "red",
-                    cursor: "pointer",
-                  }}
-                  className="material-icons"
-                >
-                  favorite
-                </i>
-                {post.likes.includes(user._id) ? (
-                  <i
-                    onClick={() => unlikePost(post._id)}
-                    style={{
-                      paddingLeft: "20px",
-                      cursor: "pointer",
-                      color: "blueviolet",
-                    }}
-                    className="material-icons"
+                  <Link
+                    to={
+                      user._id === post.postedBy._id
+                        ? "/profile"
+                        : `/profile/${post.postedBy._id}`
+                    }
                   >
-                    thumb_down
-                  </i>
-                ) : (
-                  <i
-                    onClick={() => likePost(post._id)}
-                    style={{
-                      paddingLeft: "20px",
-                      cursor: "pointer",
-                      color: "blueviolet",
-                    }}
-                    className="material-icons"
-                  >
-                    thumb_up
-                  </i>
-                )}
-                {post.postedBy._id === user._id && (
-                  <i
-                    onClick={() => deletePost(post._id)}
-                    style={{
-                      paddingRight: "20px",
-                      cursor: "pointer",
-                      float: "right",
-                    }}
-                    className="material-icons"
-                  >
-                    delete
-                  </i>
-                )}
-              </div>
-              <div className="card-content">
-                {post.likes.length} likes
-                <h5>{post.body}</h5>
-                <div
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    alignItems: "center",
-                  }}
-                ></div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignContent: "center",
-                  }}
-                >
-                  <div>
-                    {post.comments.map((comment) => (
-                      <div
-                        className="collection"
-                        key={comment._id}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          backgroundColor: "lightblue",
-                        }}
-                      >
-                        <div
-                          className="collection-item"
-                          style={{ backgroundColor: "lightblue" }}
-                        >
-                          <strong>{comment.postedBy.username}</strong>
-                          {"    "}:{"   "}
-                          {comment.text}
-                        </div>
-                        {comment.postedBy._id === user._id && (
-                          <i
-                            style={{ marginLeft: "20px" }}
-                            onClick={() => deleteComment(post._id, comment._id)}
-                            style={{
-                              paddingRight: "20px",
-                              paddingTop: "15px",
-                              cursor: "pointer",
-                              float: "right",
-                              color: "coral",
-                            }}
-                            className="tiny material-icons"
-                          >
-                            delete
-                          </i>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  <form
-                    style={{ backgroundColor: "#8d8ebc", marginTop: "20px" }}
-                    onSubmit={(e) => handleSubmit(e, post._id)}
-                    className="input-field col s6"
-                  >
-                    <i
-                      className="tiny material-icons prefix"
-                      style={{ color: "white" }}
+                    <strong
+                      style={{ paddingLeft: "20px", color: "darkmagenta" }}
+                      className="card-title"
                     >
-                      chat
-                    </i>
-                    <input
-                      className="materialize-input"
-                      name="comment"
-                      onChange={commentChange}
-                      value={comment}
-                      required
-                      placeholder="Comment here"
+                      {post.postedBy.username}
+                    </strong>
+                  </Link>
+                </div>
+                <div className="card-image">
+                  <div className="parallax">
+                    <img
+                      style={{ paddingBottom: "10px" }}
+                      src={post.photo}
+                      width="650"
+                      alt="no-image"
                     />
-                  </form>
+                  </div>
+                </div>
+                <div>
+                  <i
+                    style={{
+                      paddingLeft: "20px",
+                      color: "red",
+                      cursor: "pointer",
+                    }}
+                    className="material-icons"
+                  >
+                    favorite
+                  </i>
+                  {post.likes.includes(user._id) ? (
+                    <i
+                      onClick={() => unlikePost(post._id)}
+                      style={{
+                        paddingLeft: "20px",
+                        cursor: "pointer",
+                        color: "blueviolet",
+                      }}
+                      className="material-icons"
+                    >
+                      thumb_down
+                    </i>
+                  ) : (
+                    <i
+                      onClick={() => likePost(post._id)}
+                      style={{
+                        paddingLeft: "20px",
+                        cursor: "pointer",
+                        color: "blueviolet",
+                      }}
+                      className="material-icons"
+                    >
+                      thumb_up
+                    </i>
+                  )}
+                  {post.postedBy._id === user._id && (
+                    <i
+                      onClick={() => deletePost(post._id)}
+                      style={{
+                        paddingRight: "20px",
+                        cursor: "pointer",
+                        float: "right",
+                      }}
+                      className="material-icons"
+                    >
+                      delete
+                    </i>
+                  )}
+                </div>
+                <div className="card-content">
+                  {post.likes.length} likes
+                  <h5>{post.body}</h5>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      alignItems: "center",
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignContent: "center",
+                    }}
+                  >
+                    <div>
+                      {post.comments.map((comment) => (
+                        <div
+                          className="collection"
+                          key={comment._id}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            backgroundColor: "lightblue",
+                          }}
+                        >
+                          <div
+                            className="collection-item"
+                            style={{ backgroundColor: "lightblue" }}
+                          >
+                            <strong>{comment.postedBy.username}</strong>
+                            {"    "}:{"   "}
+                            {comment.text}
+                          </div>
+                          {comment.postedBy._id === user._id && (
+                            <i
+                              style={{ marginLeft: "20px" }}
+                              onClick={() =>
+                                deleteComment(post._id, comment._id)
+                              }
+                              style={{
+                                paddingRight: "20px",
+                                paddingTop: "15px",
+                                cursor: "pointer",
+                                float: "right",
+                                color: "coral",
+                              }}
+                              className="tiny material-icons"
+                            >
+                              delete
+                            </i>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <form
+                      style={{ backgroundColor: "#8d8ebc", marginTop: "20px" }}
+                      onSubmit={(e) => handleSubmit(e, post._id)}
+                      className="input-field col s6"
+                    >
+                      <i
+                        className="tiny material-icons prefix"
+                        style={{ color: "white" }}
+                      >
+                        chat
+                      </i>
+                      <input
+                        className="materialize-input"
+                        name="comment"
+                        onChange={commentChange}
+                        value={comment}
+                        required
+                        placeholder="Comment here"
+                      />
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <h1>Loading...</h1>
+        )}
       </div>
       <div
         className="col s12 l3"
@@ -393,18 +409,22 @@ const Home = () => {
         </nav>
 
         <div className="collection" style={search === "" ? css0 : css1}>
-          {foundUser.map((founduser) => (
-            <Link
-              to={
-                user._id === founduser._id
-                  ? "/profile"
-                  : `/profile/${founduser._id}`
-              }
-              className="collection-item"
-            >
-              {founduser.username}
-            </Link>
-          ))}
+          {user ? (
+            foundUser.map((founduser) => (
+              <Link
+                to={
+                  user._id === founduser._id
+                    ? "/profile"
+                    : `/profile/${founduser._id}`
+                }
+                className="collection-item"
+              >
+                {founduser.username}
+              </Link>
+            ))
+          ) : (
+            <h1>Loading...</h1>
+          )}
         </div>
       </div>
     </div>
