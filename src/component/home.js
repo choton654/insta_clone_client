@@ -22,9 +22,7 @@ const Home = () => {
   } else if (localStorage.key("user") != "") {
     user = JSON.parse(localStorage.getItem("user"));
   } else {
-    user = {
-      _id: Math.random(),
-    };
+    user = state.users.forEach((user) => ({ _id: user._id }));
   }
 
   const token = localStorage.getItem("jwt");
